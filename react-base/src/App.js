@@ -1,11 +1,12 @@
+import React from "react";
 import "./App.sass";
-import Message from "./components/Message/Message";
+import { Message } from "./components";
 
 function App() {
   const text = "Hello, world!";
   return (
     <div>
-      <Message message={text}></Message>
+      <Message message={text} />
     </div>
   );
 }
