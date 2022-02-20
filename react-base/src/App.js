@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.sass";
 import { Message } from "./components";
 import {
@@ -6,17 +6,16 @@ import {
   FILTER_BY_STATUS_COMPLETED,
   FILTER_BY_STATUS_IN_WORK,
 } from "./constants";
+import { useCacheTaskList } from "./hooks/useCacheTaskList";
 import { useCreateTaskForm } from "./hooks/useCreateTaskForm";
 import { useFilterByStatus } from "./hooks/useFilterByStatus";
 import { useTaskFilteredByStatus } from "./hooks/useTaskFilteredByStatus";
 import { useTaskList } from "./hooks/useTaskList";
 
 function App() {
-  const { taskList, addNewTask, changeStatus } = useTaskList();
+  const { taskList, addNewTask, changeStatus, setTaskList } = useTaskList();
 
-  useEffect(() => {
-    localStorage.setItem("task-list", JSON.stringify(taskList));
-  }, [taskList]);
+  useCacheTaskList({ setTaskList, taskList });
 
   const { filterStatus, onChangeStatus } = useFilterByStatus();
 

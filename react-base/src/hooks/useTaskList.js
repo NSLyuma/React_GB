@@ -21,5 +21,5 @@ export const useTaskList = () => {
     []
   );
 
-  return { taskList, addNewTask, changeStatus };
+  return { taskList, addNewTask, changeStatus, setTaskList };
 };
