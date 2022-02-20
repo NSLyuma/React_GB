@@ -1,25 +1,28 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useTaskList = () => {
-  const [taskList, setTaskList] = useState([]);
+  const [messageList, setMessageList] = useState([]);
 
-  const addNewTask = useCallback((text) => {
-    const task = { status: false, text };
-    setTaskList((prevState) => {
-      return [...prevState, task];
+  const addNewMessage = useCallback((text) => {
+    const message = { author: "User", text };
+
+    setMessageList((prevState) => {
+      return [...prevState, message];
     });
   }, []);
 
-  const changeStatus = useCallback(
-    (index, status) => () => {
-      setTaskList((prevTaskList) => {
-        const cloneTaskList = [...prevTaskList];
-        cloneTaskList[index] = { ...cloneTaskList[index], status: !status };
-        return cloneTaskList;
-      });
-    },
-    []
-  );
+  useEffect(() => {
+    const botMessage = { author: "Bot", text: "Some text" };
+    if (messageList.length !== 0) {
+      if (messageList[messageList.length - 1].author === "User") {
+        setTimeout(() => {
+          setMessageList((prevState) => {
+            return [...prevState, botMessage];
+          });
+        }, 1500);
+      }
+    }
+  }, [messageList]);
 
-  return { taskList, addNewTask, changeStatus, setTaskList };
+  return { messageList, addNewMessage, setMessageList };
 };
