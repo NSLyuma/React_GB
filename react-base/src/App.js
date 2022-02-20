@@ -1,24 +1,29 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import "./App.sass";
+import { useCreateMessageForm } from "./hooks/useCreateMessageForm";
+import { useMessageList } from "./hooks/useMessageList";
 
 function App() {
-  const [messageList, setMessageList] = useState("");
+  const { messageList, addNewMessage } = useMessageList();
 
-  const onChangeMessage = (event) => {
-    setMessageList(event.target.value);
-  };
+  const { handleSubmit, onChangeInput, inputValue } = useCreateMessageForm({
+    onSubmit: addNewMessage,
+  });
 
   return (
     <div>
-      <div>{messageList}</div>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-      >
-        <input value={messageList} onChange={onChangeMessage} type="text" />
-        <button type="submit">Send message</button>
+      <form onSubmit={handleSubmit}>
+        <input onChange={onChangeInput} value={inputValue} type="text" />
+        <button type="submit">Save</button>
       </form>
+
+      {messageList.map(({ author, text }, index) => {
+        return (
+          <p key={index}>
+            {author}: {text}
+          </p>
+        );
+      })}
     </div>
   );
 }
