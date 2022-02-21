@@ -1,11 +1,9 @@
 import React from "react";
 import "./App.sass";
-import { Message } from "./components";
-import {
-  FILTER_BY_STATUS_ALL,
-  FILTER_BY_STATUS_COMPLETED,
-  FILTER_BY_STATUS_IN_WORK,
-} from "./constants";
+import style from "./App.module.sass";
+import { Form } from "./components/Form/Form";
+import { Select } from "./components/Select/Select";
+import TaskList from "./components/TaskList/TaskList";
 import { useCacheTaskList } from "./hooks/useCacheTaskList";
 import { useCreateTaskForm } from "./hooks/useCreateTaskForm";
 import { useFilterByStatus } from "./hooks/useFilterByStatus";
@@ -29,19 +27,21 @@ function App() {
   });
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input onChange={onChangeInput} value={inputValue} type="text" />
-        <button type="submit">Save</button>
-      </form>
+    <div className={style.body}>
+      <h1 style={{ backgroundColor: "#fff1d0", textAlign: "center" }}>
+        Todo list
+      </h1>
+      <div className={style.task_box}>
+        <Form
+          handleSubmit={handleSubmit}
+          onChangeInput={onChangeInput}
+          inputValue={inputValue}
+        />
+        <Select value={filterStatus} onChange={onChangeStatus} />
+      </div>
+      <TaskList filteredList={filteredList} onChange={changeStatus} />
 
-      <select value={filterStatus} onChange={onChangeStatus}>
-        <option value={FILTER_BY_STATUS_ALL}>All</option>
-        <option value={FILTER_BY_STATUS_IN_WORK}>In work</option>
-        <option value={FILTER_BY_STATUS_COMPLETED}>Completed</option>
-      </select>
-
-      <ul>
+      {/* <ul>
         {filteredList.map(({ status, text }, index) => {
           return (
             <li key={index}>
@@ -54,7 +54,7 @@ function App() {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 }
