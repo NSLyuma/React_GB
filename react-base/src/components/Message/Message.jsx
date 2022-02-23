@@ -1,15 +1,14 @@
 import { List, ListItem, ListItemText } from "@mui/material";
 import React from "react";
-// import style from "./Message.module.sass";
 
 export const Message = ({ messageList }) => {
   return (
-    <List>
+    <List sx={{ padding: 0, marginTop: 2 }}>
       {messageList.map(({ author, text }, id) => {
         return (
           <ListItem
             sx={{
-              border: "1px solid black",
+              border: "2px solid #4cfccb",
               borderRadius: "25px",
               marginBottom: "10px",
             }}
@@ -19,14 +18,6 @@ export const Message = ({ messageList }) => {
               {author}: {text}
             </ListItemText>
           </ListItem>
-          //   <div
-          //   className={
-          //     author === "User" ? style.message_user : style.message_bot
-          //   }
-          //   key={id}
-          // >
-          //   {author}: {text}
-          // </div>
         );
       })}
     </List>

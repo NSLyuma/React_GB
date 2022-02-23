@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { MyButton, MyInput } from "..";
-// import style from "./Form.module.sass";
 
 export const Form = ({ handleSubmit, onChangeInput, inputValue }) => {
   return (

@@ -1,14 +1,19 @@
 import React from "react";
 import { Container } from "@mui/material";
 import { Paper } from "@mui/material";
-// import "./App.sass";
-// import style from "./App.module.sass";
+import { List, ListItem, ListItemText } from "@mui/material";
 import { Form, Message } from "./components";
 import { useCreateMessageForm } from "./hooks/useCreateMessageForm";
 import { useMessageList } from "./hooks/useMessageList";
 
 function App() {
   const { messageList, addNewMessage } = useMessageList();
+
+  const chatList = [
+    { name: "Chat1", id: 1 },
+    { name: "Chat2", id: 2 },
+    { name: "Chat3", id: 3 },
+  ];
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateMessageForm({
     onSubmit: addNewMessage,
@@ -21,18 +26,36 @@ function App() {
         alignItems: "center",
         height: "100vh",
       }}
-      maxWidth="xs"
+      maxWidth="sm"
     >
       <Paper
-        sx={{ padding: "20px", height: "80vh", width: "100%" }}
+        sx={{ display: "flex", padding: 2, height: "80vh", width: "100%" }}
         elevation={6}
       >
-        <Form
-          handleSubmit={handleSubmit}
-          onChangeInput={onChangeInput}
-          inputValue={inputValue}
-        />
-        <Message messageList={messageList} />
+        <List sx={{ borderRight: "2px solid #4cfccb", paddingRight: 2 }}>
+          {chatList.map(({ name, id }) => {
+            return (
+              <ListItem
+                sx={{
+                  border: "2px solid #4cfccb",
+                  borderRadius: "25px",
+                  marginBottom: 1,
+                }}
+                key={id}
+              >
+                <ListItemText>{name}</ListItemText>
+              </ListItem>
+            );
+          })}
+        </List>
+        <Container sx={{ padding: 0, margin: 0 }}>
+          <Form
+            handleSubmit={handleSubmit}
+            onChangeInput={onChangeInput}
+            inputValue={inputValue}
+          />
+          <Message messageList={messageList} />
+        </Container>
       </Paper>
     </Container>
   );
