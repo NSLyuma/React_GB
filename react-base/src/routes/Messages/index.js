@@ -4,8 +4,11 @@ import { Paper } from "@mui/material";
 import { Form, Message } from "../../components";
 import { useCreateMessageForm } from "../../hooks/useCreateMessageForm";
 import { useMessageList } from "../../hooks/useMessageList";
+import { useParams } from "react-router-dom";
 
 export function Messages() {
+  const { chatId } = useParams();
+
   const { messageList, addNewMessage } = useMessageList();
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateMessageForm({
@@ -16,7 +19,6 @@ export function Messages() {
     <Container
       sx={{
         display: "flex",
-        alignItems: "center",
         height: "100vh",
       }}
       maxWidth="sm"
