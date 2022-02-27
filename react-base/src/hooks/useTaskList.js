@@ -1,10 +1,11 @@
+import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
 
 export const useTaskList = () => {
   const [taskList, setTaskList] = useState([]);
 
   const addNewTask = useCallback((text) => {
-    const task = { status: false, text };
+    const task = { status: false, text, id: nanoid() };
     setTaskList((prevState) => {
       return [...prevState, task];
     });

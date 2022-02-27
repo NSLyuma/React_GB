@@ -1,40 +1,34 @@
+import { Checkbox, List, ListItem, ListItemText } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { getTaskLink } from "../../navigation";
 import { TaskItem } from "../TaskItem/TaskItem";
 import style from "./TaskList.module.sass";
 
-const TaskList = ({ filteredList, onChange }) => {
+export const TaskList = ({ filteredList, onChange }) => {
+  const { projectId } = useParams();
+
   return (
-    <ul className={style.task_list}>
-      {filteredList.map(({ status, text }, index) => {
+    <List>
+      {filteredList.map(({ status, text, id }, index) => {
         return (
-          // <TaskItem
-          //   status={status}
-          //   text={text}
-          //   key={index}
-          //   onChange={onChange}
-          // />
-          <label>
-            <li
-              className={
-                status === false
-                  ? `${style.task_item} ${style.task_item_light}`
-                  : `${style.task_item} ${style.task_item_dark}`
-              }
-              key={index}
-            >
-              <input
-                style={{ marginRight: 10 }}
+          <ListItem
+            component={Link}
+            to={getTaskLink(projectId, id)}
+            secondaryAction={
+              <Checkbox
+                edge="end"
                 onChange={onChange(index, status)}
                 checked={status}
-                type="checkbox"
               />
-              {text}
-            </li>
-          </label>
+            }
+            key={id}
+          >
+            <ListItemText>{text}</ListItemText>
+          </ListItem>
         );
       })}
-    </ul>
+    </List>
   );
 };
-
-export default TaskList;
