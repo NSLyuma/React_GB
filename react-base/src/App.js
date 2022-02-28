@@ -16,7 +16,7 @@ import { Profile } from "./routes/Profile";
 
 const App = () => {
   return (
-    <div>
+    <div style={{ marginLeft: 30 }}>
       <Header />
       <Switch>
         <Route exact path={getHomeLink()} component={Home}></Route>

@@ -3,7 +3,7 @@ import { getMessagesLink } from "../../navigation";
 import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText } from "@mui/material";
 
-export const Chat = ({ chats }) => {
+export const Chat = ({ chatList }) => {
   return (
     <List
       sx={{
@@ -12,7 +12,7 @@ export const Chat = ({ chats }) => {
         marginLeft: 4,
       }}
     >
-      {chats.map(({ name, id }) => {
+      {chatList.map(({ name, id }) => {
         return (
           <ListItem
             component={Link}
