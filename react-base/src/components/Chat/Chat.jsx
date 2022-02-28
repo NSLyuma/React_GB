@@ -3,7 +3,7 @@ import { getMessagesLink } from "../../navigation";
 import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText } from "@mui/material";
 
-export const Chat = ({ chatList }) => {
+export const Chat = ({ chatList, deleteChat }) => {
   return (
     <List
       sx={{
@@ -26,6 +26,7 @@ export const Chat = ({ chatList }) => {
             key={id}
           >
             <ListItemText>{name}</ListItemText>
+            <div onClick={() => deleteChat(id)}>X</div>
           </ListItem>
         );
       })}

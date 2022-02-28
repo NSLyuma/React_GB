@@ -2,26 +2,39 @@ import { Grid } from "@mui/material";
 import { nanoid } from "nanoid";
 import { Chat, Form } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
-import { useChatList } from "../../hooks/useChatList";
+import { useCallback, useState } from "react";
 
-export const chats = Array.from({ length: 5 }).map((_, index) => ({
-  name: `Chat ${index + 1}`,
-  id: nanoid(),
-}));
+// export const chats = Array.from({ length: 5 }).map((_, index) => ({
+//   name: `Chat ${index + 1}`,
+//   id: nanoid(),
+// }));
 
 export function Chats({ children }) {
-  const { chatList, addNewChat } = useChatList();
+  const [chatList, setChatList] = useState([]);
+
+  const addNewChat = useCallback((name) => {
+    const chat = { name, id: nanoid() };
+
+    setChatList((prevState) => {
+      return [...prevState, chat];
+    });
+  }, []);
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
     onSubmit: addNewChat,
   });
+
+  const deleteChat = (id) => {
+    setChatList((prevState) => prevState.filter((el) => el.id !== id));
+    console.log(id);
+  };
 
   return (
     <div>
       <h1>Chats</h1>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Chat chatList={chatList} />
+          <Chat chatList={chatList} deleteChat={deleteChat} />
           <Form
             handleSubmit={handleSubmit}
             onChangeInput={onChangeInput}
