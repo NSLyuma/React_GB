@@ -1,15 +1,14 @@
 import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { nanoid } from "nanoid";
 import { Link } from "react-router-dom";
+import { getMessagesLink } from "../../navigation";
+
+export const chats = Array.from({ length: 5 }).map((_, index) => ({
+  name: `Chat ${index + 1}`,
+  id: nanoid(),
+}));
 
 export const Chats = ({ children }) => {
-  const chatList = [
-    { name: "Chat 1", id: 1 },
-    { name: "Chat 2", id: 2 },
-    { name: "Chat 3", id: 3 },
-    { name: "Chat 4", id: 4 },
-    { name: "Chat 5", id: 5 },
-  ];
-
   return (
     <div>
       <h1>Chats</h1>
@@ -22,11 +21,11 @@ export const Chats = ({ children }) => {
               marginLeft: 4,
             }}
           >
-            {chatList.map(({ name, id }) => {
+            {chats.map(({ name, id }) => {
               return (
                 <ListItem
                   component={Link}
-                  to={`/chats/${id}`}
+                  to={getMessagesLink(id)}
                   sx={{
                     border: "2px solid #4cfccb",
                     borderRadius: "25px",
@@ -36,6 +35,7 @@ export const Chats = ({ children }) => {
                   key={id}
                 >
                   <ListItemText>{name}</ListItemText>
+                  <div style={{ cursor: "pointer" }}>X</div>
                 </ListItem>
               );
             })}

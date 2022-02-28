@@ -4,7 +4,9 @@ import { Paper } from "@mui/material";
 import { Form, Message } from "../../components";
 import { useCreateMessageForm } from "../../hooks/useCreateMessageForm";
 import { useMessageList } from "../../hooks/useMessageList";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
+import { chats } from "../Chats";
+import { getNotFoundLink } from "../../navigation";
 
 export function Messages() {
   const { chatId } = useParams();
@@ -14,6 +16,10 @@ export function Messages() {
   const { handleSubmit, onChangeInput, inputValue } = useCreateMessageForm({
     onSubmit: addNewMessage,
   });
+
+  if (!chats.find((item) => item.id === chatId)) {
+    return <Redirect to={getNotFoundLink()} />;
+  }
 
   return (
     <Container
@@ -32,6 +38,8 @@ export function Messages() {
             handleSubmit={handleSubmit}
             onChangeInput={onChangeInput}
             inputValue={inputValue}
+            text="Send"
+            placeholder="Enter your message"
           />
           <Message messageList={messageList} />
         </Container>

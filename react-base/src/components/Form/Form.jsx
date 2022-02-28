@@ -2,7 +2,13 @@ import { Box } from "@mui/material";
 import React from "react";
 import { MyButton, MyInput } from "..";
 
-export const Form = ({ handleSubmit, onChangeInput, inputValue }) => {
+export const Form = ({
+  handleSubmit,
+  onChangeInput,
+  inputValue,
+  text,
+  placeholder,
+}) => {
   return (
     <Box
       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -12,9 +18,9 @@ export const Form = ({ handleSubmit, onChangeInput, inputValue }) => {
       <MyInput
         onChange={onChangeInput}
         value={inputValue}
-        placeholder="Enter your message"
+        placeholder={placeholder}
       />
-      <MyButton type="submit" text="Send" />
+      <MyButton type="submit" text={text}></MyButton>
     </Box>
   );
 };
