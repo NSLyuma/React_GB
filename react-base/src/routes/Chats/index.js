@@ -3,14 +3,10 @@ import { nanoid } from "nanoid";
 import { Chat, Form } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
 import { useCallback, useState } from "react";
-
-// export const chats = Array.from({ length: 5 }).map((_, index) => ({
-//   name: `Chat ${index + 1}`,
-//   id: nanoid(),
-// }));
+import { chats } from "../../mocks";
 
 export function Chats({ children }) {
-  const [chatList, setChatList] = useState([]);
+  const [chatList, setChatList] = useState(chats);
 
   const addNewChat = useCallback((name) => {
     const chat = { name, id: nanoid() };
@@ -26,7 +22,6 @@ export function Chats({ children }) {
 
   const deleteChat = (id) => {
     setChatList((prevState) => prevState.filter((el) => el.id !== id));
-    console.log(id);
   };
 
   return (

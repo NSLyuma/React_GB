@@ -22,8 +22,10 @@ const App = () => {
         <Route exact path={getHomeLink()} component={Home}></Route>
         <Route path={getChatsLink()}>
           <Chats>
-            <Route path={getMessagesLink()} component={Messages} />
-            <Route path={getNotFoundLink()} component={NotFound} />
+            <Switch>
+              <Route path={getMessagesLink()} component={Messages} />
+              <Route path={getNotFoundLink()} component={NotFound} />
+            </Switch>
           </Chats>
         </Route>
         <Route path={getProfileLink()} component={Profile}></Route>
