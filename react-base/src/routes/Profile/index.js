@@ -1,23 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CHANGE_PROFILE_STATUS } from "../../store/profile/actions";
+import { DISPLAY_PROFILE } from "../../store/profile/actions";
 
 export const Profile = () => {
-  const profile = useSelector((state) => state.profile);
-
   const dispatch = useDispatch();
 
-  const changeStatus = (status) => () => {
-    dispatch({ type: CHANGE_PROFILE_STATUS, payload: { status: !status } });
+  const isShow = useSelector((state) => state.isShow);
+
+  const changeStatus = () => {
+    dispatch({ type: DISPLAY_PROFILE });
   };
 
   return (
     <div>
       <h1>Profile</h1>
-      <input
-        onClick={changeStatus(profile.status)}
-        checked={profile.status}
-        type="checkbox"
-      />
+      <input type="checkbox" checked={isShow} onChange={changeStatus} />
     </div>
   );
 };
