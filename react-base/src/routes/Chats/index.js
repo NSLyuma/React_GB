@@ -1,26 +1,25 @@
-import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Grid } from "@mui/material";
 import { nanoid } from "nanoid";
 import { Chat, Form } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
-import { useCallback, useState } from "react";
-import { chats } from "../../mocks";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_CHAT_LIST, DELETE_CHAT } from "../../store/chats/actions";
-import { Link } from "react-router-dom";
-import { getMessagesLink } from "../../navigation";
+import {
+  createChat,
+  CREATE_CHAT_LIST,
+  DELETE_CHAT,
+} from "../../store/chats/actions";
+import { getChatList } from "../../store/chats/selectors";
 
 export function Chats({ children }) {
-  const chatList = useSelector((state) => state.chats.chatList);
+  const chatList = useSelector(getChatList);
 
   const dispatch = useDispatch();
 
   const addNewChat = useCallback((name) => {
-    const chat = { name, id: nanoid() };
+    const chat = { id: nanoid(), name };
 
-    dispatch({
-      type: CREATE_CHAT_LIST,
-      payload: chat,
-    });
+    dispatch(createChat(chat));
   }, []);
 
   const deleteChat = (id) => () => {

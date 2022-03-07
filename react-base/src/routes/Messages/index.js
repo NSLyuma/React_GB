@@ -5,48 +5,49 @@ import { Form, Message } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
 import { Redirect, useParams } from "react-router-dom";
 import { getNotFoundLink } from "../../navigation";
-import { chats } from "../../mocks";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_MESSAGE_LIST } from "../../store/messages/actions";
+import {
+  createMessage,
+  CREATE_MESSAGE_LIST,
+} from "../../store/messages/actions";
 import { nanoid } from "nanoid";
 
 export function Messages() {
   const { chatId } = useParams();
 
-  const messageList = useSelector((state) => state.messages.messageList);
+  const messageList = useSelector(
+    (state) => state.messages.messageList[chatId]
+  );
 
   const dispatch = useDispatch();
 
-  const addNewMessage = useCallback((text) => {
-    const message = { author: "User", text, id: nanoid() };
+  const addNewMessage = (text) => {
+    const message = { id: nanoid(), author: "User", text };
 
-    dispatch({
-      type: CREATE_MESSAGE_LIST,
-      payload: message,
-    });
-  }, []);
+    dispatch(createMessage(chatId, message));
+  };
 
-  useEffect(() => {
-    const botMessage = { author: "Bot", text: "Some text" };
-    if (messageList.length !== 0) {
-      if (messageList[messageList.length - 1].author === "User") {
-        setTimeout(() => {
-          dispatch({
-            type: CREATE_MESSAGE_LIST,
-            payload: botMessage,
-          });
-        }, 1000);
-      }
-    }
-  }, [messageList]);
+  // useEffect(() => {
+  //   const botMessage = { author: "Bot", text: "Some text" };
+  //   if (messageList[chatId].length !== 0) {
+  //     if (messageList[chatId][messageList.length - 1].author === "User") {
+  //       setTimeout(() => {
+  //         dispatch({
+  //           type: CREATE_MESSAGE_LIST,
+  //           payload: botMessage,
+  //         });
+  //       }, 1000);
+  //     }
+  //   }
+  // }, [messageList]);
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
     onSubmit: addNewMessage,
   });
 
-  if (!chats.find((item) => item.id === chatId)) {
-    return <Redirect to={getNotFoundLink()} />;
-  }
+  // if (!chats.find((item) => item.id === chatId)) {
+  //   return <Redirect to={getNotFoundLink()} />;
+  // }
 
   return (
     <Container

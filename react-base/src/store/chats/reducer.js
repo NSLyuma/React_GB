@@ -22,12 +22,3 @@ export const chatsReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-// const {projectId, todoId} = action.payload;
-//             return {
-//                 ...state,
-//                 todos: {
-//                     ...state.todos,
-//                     [projectId]: state.todos[projectId]?.filter((item) => item.id !== todoId),
-//                 },
-//             }

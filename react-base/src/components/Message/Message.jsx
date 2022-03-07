@@ -4,7 +4,7 @@ import React from "react";
 export const Message = ({ messageList }) => {
   return (
     <List sx={{ padding: 0, marginTop: 2 }}>
-      {messageList.map(({ author, text }, id) => {
+      {messageList?.map(({ author, text }, id) => {
         return (
           <ListItem
             sx={{
