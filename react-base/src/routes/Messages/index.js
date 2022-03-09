@@ -11,9 +11,11 @@ import {
   CREATE_MESSAGE_LIST,
 } from "../../store/messages/actions";
 import { nanoid } from "nanoid";
+import { getChatList } from "../../store/chats/selectors";
 
 export function Messages() {
   const { chatId } = useParams();
+  const chatList = useSelector(getChatList);
 
   const messageList = useSelector(
     (state) => state.messages.messageList[chatId]
@@ -32,10 +34,7 @@ export function Messages() {
   //   if (messageList[chatId].length !== 0) {
   //     if (messageList[chatId][messageList.length - 1].author === "User") {
   //       setTimeout(() => {
-  //         dispatch({
-  //           type: CREATE_MESSAGE_LIST,
-  //           payload: botMessage,
-  //         });
+  //         dispatch(createMessage(chatId, botMessage));
   //       }, 1000);
   //     }
   //   }
@@ -45,9 +44,11 @@ export function Messages() {
     onSubmit: addNewMessage,
   });
 
-  // if (!chats.find((item) => item.id === chatId)) {
-  //   return <Redirect to={getNotFoundLink()} />;
-  // }
+  if (!chatList.find((item) => item.id === chatId)) {
+    return <Redirect to={getNotFoundLink()} />;
+  }
+
+  console.log(messageList);
 
   return (
     <Container
