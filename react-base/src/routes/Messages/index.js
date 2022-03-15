@@ -12,14 +12,13 @@ import {
 } from "../../store/messages/actions";
 import { nanoid } from "nanoid";
 import { getChatList } from "../../store/chats/selectors";
+import { getMessageListByChats } from "../../store/messages/selectors";
 
 export function Messages() {
   const { chatId } = useParams();
   const chatList = useSelector(getChatList);
 
-  const messageList = useSelector(
-    (state) => state.messages.messageList[chatId]
-  );
+  const messageList = useSelector(getMessageListByChats(chatId));
 
   const dispatch = useDispatch();
 
@@ -31,8 +30,8 @@ export function Messages() {
 
   // useEffect(() => {
   //   const botMessage = { author: "Bot", text: "Some text" };
-  //   if (messageList[chatId].length !== 0) {
-  //     if (messageList[chatId][messageList.length - 1].author === "User") {
+  //   if (messageList.length !== 0) {
+  //     if (messageList[messageList.length - 1].author === "User") {
   //       setTimeout(() => {
   //         dispatch(createMessage(chatId, botMessage));
   //       }, 1000);
@@ -47,8 +46,6 @@ export function Messages() {
   if (!chatList.find((item) => item.id === chatId)) {
     return <Redirect to={getNotFoundLink()} />;
   }
-
-  console.log(messageList);
 
   return (
     <Container
