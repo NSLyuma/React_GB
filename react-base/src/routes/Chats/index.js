@@ -4,11 +4,7 @@ import { Chat, Form } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createChat,
-  CREATE_CHAT_LIST,
-  DELETE_CHAT,
-} from "../../store/chats/actions";
+import { createChat, deleteChat, DELETE_CHAT } from "../../store/chats/actions";
 import { getChatList } from "../../store/chats/selectors";
 
 export function Chats({ children }) {
@@ -22,11 +18,8 @@ export function Chats({ children }) {
     dispatch(createChat(chat));
   }, []);
 
-  const deleteChat = (id) => () => {
-    dispatch({
-      type: DELETE_CHAT,
-      payload: id,
-    });
+  const removeChat = (id) => () => {
+    dispatch(deleteChat(id));
   };
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
@@ -38,7 +31,7 @@ export function Chats({ children }) {
       <h1>Chats</h1>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Chat chatList={chatList} deleteChat={deleteChat} />
+          <Chat chatList={chatList} removeChat={removeChat} />
           <Form
             handleSubmit={handleSubmit}
             onChangeInput={onChangeInput}
