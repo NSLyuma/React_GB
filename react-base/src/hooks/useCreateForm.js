@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export const useCreateMessageForm = ({ onSubmit }) => {
+export const useCreateForm = ({ onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
 
   const resetInputValue = useCallback(() => {
