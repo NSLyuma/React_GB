@@ -1,21 +1,25 @@
+import { List, ListItem, ListItemText } from "@mui/material";
 import React from "react";
-import style from "./Message.module.sass";
 
 export const Message = ({ messageList }) => {
   return (
-    <div className={style.message}>
-      {messageList.map(({ author, text }, index) => {
+    <List sx={{ padding: 0, marginTop: 2 }}>
+      {messageList.map(({ author, text }, id) => {
         return (
-          <div
-            className={
-              author === "User" ? style.message_user : style.message_bot
-            }
-            key={index}
+          <ListItem
+            sx={{
+              border: "2px solid #4cfccb",
+              borderRadius: "25px",
+              marginBottom: "10px",
+            }}
+            key={id}
           >
-            {author}: {text}
-          </div>
+            <ListItemText>
+              {author}: {text}
+            </ListItemText>
+          </ListItem>
         );
       })}
-    </div>
+    </List>
   );
 };

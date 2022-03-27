@@ -5,7 +5,7 @@ export const useMessageList = () => {
   const [messageList, setMessageList] = useState([]);
 
   const addNewMessage = useCallback((text) => {
-    const message = { author: "User", text };
+    const message = { author: "User", text, id: Date.now() };
 
     setMessageList((prevState) => {
       return [...prevState, message];
