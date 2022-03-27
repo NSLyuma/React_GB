@@ -26,7 +26,9 @@ const App = () => {
           <Route path={getChatsLink()}>
             <Chats>
               <Switch>
-                <Route path={getMessagesLink()} component={Messages} />
+                <Route path={getMessagesLink()}>
+                  <Messages />
+                </Route>
                 <Route path={getNotFoundLink()} component={NotFound} />
               </Switch>
             </Chats>

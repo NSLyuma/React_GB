@@ -2,11 +2,8 @@ import React from "react";
 import { getMessagesLink } from "../../navigation";
 import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText } from "@mui/material";
-import { useParams } from "react-router-dom";
 
-export const Chat = ({ chatList, deleteChat }) => {
-  const { chatId } = useParams();
-
+export const Chat = ({ chatList, removeChat }) => {
   return (
     <List
       sx={{
@@ -25,11 +22,14 @@ export const Chat = ({ chatList, deleteChat }) => {
               borderRadius: "25px",
               marginBottom: 1,
               color: "#fc4c7e",
+              wordBreak: "break-word",
             }}
             key={id}
           >
             <ListItemText>{name}</ListItemText>
-            <div onClick={() => deleteChat(id)}>X</div>
+            <div style={{ padding: "10px" }} onClick={removeChat(id)}>
+              X
+            </div>
           </ListItem>
         );
       })}

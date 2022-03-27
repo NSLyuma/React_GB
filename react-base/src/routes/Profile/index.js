@@ -4,7 +4,7 @@ import { DISPLAY_PROFILE } from "../../store/profile/actions";
 export const Profile = () => {
   const dispatch = useDispatch();
 
-  const isShow = useSelector((state) => state.isShow);
+  const isShow = useSelector((state) => state.profile.isShow);
 
   const changeStatus = () => {
     dispatch({ type: DISPLAY_PROFILE });

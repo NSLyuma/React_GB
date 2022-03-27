@@ -2,34 +2,36 @@ import { Grid } from "@mui/material";
 import { nanoid } from "nanoid";
 import { Chat, Form } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
-import { useCallback, useState } from "react";
-import { chats } from "../../mocks";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createChat, deleteChat, DELETE_CHAT } from "../../store/chats/actions";
+import { getChatList } from "../../store/chats/selectors";
 
 export function Chats({ children }) {
-  const [chatList, setChatList] = useState(chats);
+  const chatList = useSelector(getChatList);
+
+  const dispatch = useDispatch();
 
   const addNewChat = useCallback((name) => {
-    const chat = { name, id: nanoid() };
+    const chat = { id: nanoid(), name };
 
-    setChatList((prevState) => {
-      return [...prevState, chat];
-    });
+    dispatch(createChat(chat));
   }, []);
+
+  const removeChat = (id) => () => {
+    dispatch(deleteChat(id));
+  };
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
     onSubmit: addNewChat,
   });
-
-  const deleteChat = (id) => {
-    setChatList((prevState) => prevState.filter((el) => el.id !== id));
-  };
 
   return (
     <div>
       <h1>Chats</h1>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Chat chatList={chatList} deleteChat={deleteChat} />
+          <Chat chatList={chatList} removeChat={removeChat} />
           <Form
             handleSubmit={handleSubmit}
             onChangeInput={onChangeInput}
