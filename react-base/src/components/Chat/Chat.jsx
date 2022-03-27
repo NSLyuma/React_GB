@@ -2,8 +2,11 @@ import React from "react";
 import { getMessagesLink } from "../../navigation";
 import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 export const Chat = ({ chatList, deleteChat }) => {
+  const { chatId } = useParams();
+
   return (
     <List
       sx={{
