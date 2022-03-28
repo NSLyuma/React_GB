@@ -14,27 +14,30 @@ import { Home } from "./routes/Home";
 import { Messages } from "./routes/Messages";
 import { NotFound } from "./routes/NotFound";
 import { Profile } from "./routes/Profile";
-import { store } from "./store";
+import { store, persistor } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const App = () => {
   return (
     <div style={{ marginLeft: 30 }}>
       <Provider store={store}>
-        <Header />
-        <Switch>
-          <Route exact path={getHomeLink()} component={Home}></Route>
-          <Route path={getChatsLink()}>
-            <Chats>
-              <Switch>
-                <Route path={getMessagesLink()}>
-                  <Messages />
-                </Route>
-                <Route path={getNotFoundLink()} component={NotFound} />
-              </Switch>
-            </Chats>
-          </Route>
-          <Route path={getProfileLink()} component={Profile}></Route>
-        </Switch>
+        <PersistGate loading={null} persistor={persistor}>
+          <Header />
+          <Switch>
+            <Route exact path={getHomeLink()} component={Home}></Route>
+            <Route path={getChatsLink()}>
+              <Chats>
+                <Switch>
+                  <Route path={getMessagesLink()}>
+                    <Messages />
+                  </Route>
+                  <Route path={getNotFoundLink()} component={NotFound} />
+                </Switch>
+              </Chats>
+            </Route>
+            <Route path={getProfileLink()} component={Profile}></Route>
+          </Switch>
+        </PersistGate>
       </Provider>
     </div>
   );
