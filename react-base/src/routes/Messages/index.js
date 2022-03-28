@@ -1,28 +1,35 @@
 import React, { useEffect } from "react";
-import { Container } from "@mui/material";
-import { Paper } from "@mui/material";
-import { Form, Message } from "../../components";
 import { useCreateForm } from "../../hooks/useCreateForm";
 import { Redirect, useParams } from "react-router-dom";
 import { getNotFoundLink } from "../../navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { createMessage } from "../../store/messages/actions";
+import {
+  createBotMessageThunk,
+  createMessageThunk,
+} from "../../store/messages/actions";
 import { nanoid } from "nanoid";
 import { getChatList } from "../../store/chats/selectors";
-import { getMessageListByChats } from "../../store/messages/selectors";
+import {
+  getErrorMessageList,
+  getIsLoadingMessageList,
+  getMessageListByChats,
+} from "../../store/messages/selectors";
+import { MessagesPresenter } from "./MessagesPresenter";
 
 export function Messages() {
   const { chatId } = useParams();
   const chatList = useSelector(getChatList);
 
   const messageList = useSelector(getMessageListByChats(chatId));
+  const isLoading = useSelector(getIsLoadingMessageList);
+  const error = useSelector(getErrorMessageList);
 
   const dispatch = useDispatch();
 
   const addNewMessage = (text) => {
     const message = { id: nanoid(), author: "User", text };
 
-    dispatch(createMessage(chatId, message));
+    dispatch(createMessageThunk(chatId, message));
   };
 
   useEffect(() => {
@@ -32,9 +39,7 @@ export function Messages() {
     }
     if (messageList.length !== 0) {
       if (messageList[messageList.length - 1].author === "User") {
-        setTimeout(() => {
-          dispatch(createMessage(chatId, botMessage));
-        }, 1000);
+        dispatch(createBotMessageThunk(chatId, botMessage));
       }
     }
   }, [messageList]);
@@ -48,28 +53,13 @@ export function Messages() {
   }
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        height: "100vh",
-      }}
-      maxWidth="sm"
-    >
-      <Paper
-        sx={{ display: "flex", padding: 2, height: "80vh", width: "100%" }}
-        elevation={6}
-      >
-        <Container sx={{ padding: 0, margin: 0 }}>
-          <Form
-            handleSubmit={handleSubmit}
-            onChangeInput={onChangeInput}
-            inputValue={inputValue}
-            text="Send"
-            placeholder="Enter your message"
-          />
-          <Message messageList={messageList} />
-        </Container>
-      </Paper>
-    </Container>
+    <MessagesPresenter
+      error={error}
+      handleSubmit={handleSubmit}
+      onChangeInput={onChangeInput}
+      inputValue={inputValue}
+      messageList={messageList}
+      isLoading={isLoading}
+    />
   );
 }

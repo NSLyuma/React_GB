@@ -11,3 +11,11 @@ export const deleteChat = (chatId) => ({
   type: DELETE_CHAT,
   payload: chatId,
 });
+
+export const createChatThunk = (chat) => (dispatch) => {
+  dispatch(createChat(chat));
+};
+
+export const deleteChatThunk = (chatId) => (dispatch) => {
+  dispatch(deleteChat(chatId));
+};
