@@ -1,7 +1,15 @@
-import { CREATE_CHAT_LIST, DELETE_CHAT } from "./actions";
+import {
+  CREATE_CHAT_LIST,
+  DELETE_CHAT,
+  SET_CHATS,
+  SET_ERROR_CHAT,
+  SET_LOADING_CHAT,
+} from "./actions";
 
 const initialState = {
   chatList: [],
+  isLoading: false,
+  error: null,
 };
 
 export const chatsReducer = (state = initialState, action) => {
@@ -16,6 +24,24 @@ export const chatsReducer = (state = initialState, action) => {
       return {
         ...state,
         chatList: state.chatList.filter(({ id }) => id !== action.payload),
+      };
+    }
+    case SET_LOADING_CHAT: {
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    }
+    case SET_ERROR_CHAT: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    case SET_CHATS: {
+      return {
+        ...state,
+        chatList: action.payload,
       };
     }
     default:

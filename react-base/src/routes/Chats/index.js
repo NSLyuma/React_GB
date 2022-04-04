@@ -1,8 +1,12 @@
 import { nanoid } from "nanoid";
 import { useCreateForm } from "../../hooks/useCreateForm";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createChatThunk, deleteChatThunk } from "../../store/chats/actions";
+import {
+  createChatThunk,
+  deleteChatThunk,
+  getChatsThunk,
+} from "../../store/chats/actions";
 import { getChatList } from "../../store/chats/selectors";
 import { ChatsPresenter } from "./ChatsPresenter";
 
@@ -24,6 +28,10 @@ export function Chats({ children }) {
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
     onSubmit: addNewChat,
   });
+
+  useEffect(() => {
+    dispatch(getChatsThunk());
+  }, []);
 
   return (
     <ChatsPresenter
