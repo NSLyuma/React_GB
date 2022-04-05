@@ -1,5 +1,7 @@
 export const getHomeLink = () => "/";
 
+export const getGistsLink = () => ["", "gists"].join("/");
+
 export const getProfileLink = () => ["", "profile"].join("/");
 
 export const getChatsLink = () => ["", "chats"].join("/");

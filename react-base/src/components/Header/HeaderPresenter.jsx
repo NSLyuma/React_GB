@@ -26,6 +26,9 @@ export const HeaderPresenter = ({
         <MenuItem onClick={onClick} component={Link} to={"/"}>
           Home
         </MenuItem>
+        <MenuItem onClick={onClick} component={Link} to={"/gists"}>
+          Laureates
+        </MenuItem>
         <MenuItem onClick={onClick} component={Link} to={"/profile"}>
           Profile
         </MenuItem>

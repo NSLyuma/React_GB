@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { Header } from "./components";
 import {
   getChatsLink,
+  getGistsLink,
   getHomeLink,
   getMessagesLink,
   getNotFoundLink,
@@ -16,6 +17,7 @@ import { NotFound } from "./routes/NotFound";
 import { Profile } from "./routes/Profile";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
+import { Gists } from "./routes/Gists";
 
 const App = () => {
   return (
@@ -24,7 +26,8 @@ const App = () => {
         <PersistGate loading={null} persistor={persistor}>
           <Header />
           <Switch>
-            <Route exact path={getHomeLink()} component={Home}></Route>
+            <Route exact path={getHomeLink()} component={Home} />
+            <Route path={getGistsLink()} component={Gists} />
             <Route path={getChatsLink()}>
               <Chats>
                 <Switch>
@@ -35,7 +38,7 @@ const App = () => {
                 </Switch>
               </Chats>
             </Route>
-            <Route path={getProfileLink()} component={Profile}></Route>
+            <Route path={getProfileLink()} component={Profile} />
           </Switch>
         </PersistGate>
       </Provider>

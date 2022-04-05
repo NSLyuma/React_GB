@@ -1,10 +1,14 @@
-import { wait } from "../../api";
+import { nanoid } from "nanoid";
 
 export const CREATE_MESSAGE_LIST = "CREATE_MESSAGE_LIST";
 
 export const SET_LOADING_MESSAGE_LIST = "SET_LOADING_MESSAGE_LIST";
 
 export const SET_ERROR_MESSAGE_LIST = "SET_ERROR_MESSAGE_LIST";
+
+const createNewMessage = (author, text) => {
+  return { id: nanoid(), author, text };
+};
 
 export const setLoadingMessageList = (isLoading) => ({
   type: SET_LOADING_MESSAGE_LIST,
@@ -21,19 +25,12 @@ export const createMessage = (chatId, message) => ({
   payload: { chatId, message },
 });
 
-export const createMessageThunk = (chatId, message) => (dispatch) => {
-  dispatch(createMessage(chatId, message));
-};
+export const createMessageThunk = (text, chatId) => (dispatch) => {
+  const userMessage = createNewMessage("User", text);
+  dispatch(createMessage(chatId, userMessage));
 
-export const createBotMessageThunk = (chatId, message) => async (dispatch) => {
-  dispatch(setLoadingMessageList(true));
-
-  try {
-    await wait(1000);
-    dispatch(createMessage(chatId, message));
-  } catch (error) {
-    dispatch(setErrorMessageList(error));
-  }
-
-  dispatch(setLoadingMessageList(false));
+  const botMessage = createNewMessage("Bot", "Some text");
+  setTimeout(() => {
+    dispatch(createMessage(chatId, botMessage));
+  }, 1000);
 };

@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useCreateForm } from "../../hooks/useCreateForm";
 import { Redirect, useParams } from "react-router-dom";
 import { getNotFoundLink } from "../../navigation";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createBotMessageThunk,
-  createMessageThunk,
-} from "../../store/messages/actions";
-import { nanoid } from "nanoid";
+import { createMessageThunk } from "../../store/messages/actions";
 import { getChatList } from "../../store/chats/selectors";
 import {
   getErrorMessageList,
@@ -27,22 +23,8 @@ export function Messages() {
   const dispatch = useDispatch();
 
   const addNewMessage = (text) => {
-    const message = { id: nanoid(), author: "User", text };
-
-    dispatch(createMessageThunk(chatId, message));
+    dispatch(createMessageThunk(text, chatId));
   };
-
-  useEffect(() => {
-    const botMessage = { author: "Bot", text: "Some text" };
-    if (!messageList) {
-      return;
-    }
-    if (messageList.length !== 0) {
-      if (messageList[messageList.length - 1].author === "User") {
-        dispatch(createBotMessageThunk(chatId, botMessage));
-      }
-    }
-  }, [messageList]);
 
   const { handleSubmit, onChangeInput, inputValue } = useCreateForm({
     onSubmit: addNewMessage,
