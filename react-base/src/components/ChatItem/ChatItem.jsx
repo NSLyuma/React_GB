@@ -3,7 +3,7 @@ import { getMessagesLink } from "../../navigation";
 import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText } from "@mui/material";
 
-export const Chat = ({ chatList, removeChat }) => {
+export const ChatItem = ({ chatList, removeChat }) => {
   return (
     <List
       sx={{
