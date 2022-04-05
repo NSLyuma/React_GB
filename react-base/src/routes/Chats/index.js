@@ -1,6 +1,5 @@
 import { nanoid } from "nanoid";
 import { useCreateForm } from "../../hooks/useCreateForm";
-import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createChatThunk, deleteChatThunk } from "../../store/chats/actions";
 import { getChatList } from "../../store/chats/selectors";
@@ -11,11 +10,11 @@ export function Chats({ children }) {
 
   const dispatch = useDispatch();
 
-  const addNewChat = useCallback((name) => {
+  const addNewChat = (name) => {
     const chat = { id: nanoid(), name };
 
     dispatch(createChatThunk(chat));
-  }, []);
+  };
 
   const removeChat = (id) => () => {
     dispatch(deleteChatThunk(id));
