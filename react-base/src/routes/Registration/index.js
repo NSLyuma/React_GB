@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { auth, fb } from "../../firebase";
+import { auth } from "../../firebase";
 import { getLoginLink } from "../../navigation";
 
 export const Registration = () => {

@@ -1,20 +1,58 @@
-import React from "react";
-import { MyInput } from "../../components/MyInput/MyInput";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { auth } from "../../firebase";
+import { getRegistrationLink } from "../../navigation";
 
 export const Login = () => {
-  const onSubmitForm = (event) => {
-    event.preventDefault();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const handlePassChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      setError(error.message);
+    }
   };
   return (
-    <form onSubmit={onSubmitForm}>
-      <h1>Login</h1>
-      <MyInput style={{ marginTop: "50px" }} placeholder="e-mail" />
-      <br />
-      <MyInput
-        style={{ marginTop: "30px" }}
-        type="password"
-        placeholder="password"
-      />
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <p>Fill in the form below to login to your account.</p>
+        <div>
+          <input
+            placeholder="Email"
+            name="email"
+            type="email"
+            onChange={handleEmailChange}
+            value={email}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Password"
+            name="password"
+            onChange={handlePassChange}
+            value={password}
+            type="password"
+          />
+        </div>
+        <div>
+          {error && <p>{error}</p>}
+          <button type="submit">Login</button>
+        </div>
+        <hr />
+        <p>
+          Don't have an account? <Link to={getRegistrationLink}>Sign up</Link>
+        </p>
+      </form>
+    </div>
   );
 };

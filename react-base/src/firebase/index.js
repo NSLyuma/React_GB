@@ -17,7 +17,6 @@ export const fb = firebase;
 fb.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 const firestore = firebase.firestore();
-
 // export const db = firebase.database();
 
 // export const rootRef = db.ref("root");

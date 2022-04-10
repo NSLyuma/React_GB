@@ -3,8 +3,6 @@ import thunk from "redux-thunk";
 import { profileReducer } from "./profile/reducer";
 import { messagesReducer } from "./messages/reducer";
 import { chatsReducer } from "./chats/reducer";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import { gistsReducer } from "./gists/reducer";
 
 const rootReducer = combineReducers({
@@ -14,18 +12,6 @@ const rootReducer = combineReducers({
   gists: gistsReducer,
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
-export const store = createStore(
-  persistedReducer,
-  compose(applyMiddleware(thunk))
-);
-
-export const persistor = persistStore(store);
+export const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
