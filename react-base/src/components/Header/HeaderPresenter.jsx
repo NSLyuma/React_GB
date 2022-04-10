@@ -3,6 +3,14 @@ import { Menu } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MyButton } from "../MyButton/MyButton";
+import {
+  getChatsLink,
+  getGistsLink,
+  getHomeLink,
+  getLoginLink,
+  getProfileLink,
+  getRegistrationLink,
+} from "../../navigation";
 
 export const HeaderPresenter = ({
   onBtnClick,
@@ -23,16 +31,16 @@ export const HeaderPresenter = ({
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={onClick} component={Link} to={"/"}>
+        <MenuItem onClick={onClick} component={Link} to={getHomeLink}>
           Home
         </MenuItem>
-        <MenuItem onClick={onClick} component={Link} to={"/gists"}>
+        <MenuItem onClick={onClick} component={Link} to={getGistsLink}>
           Laureates
         </MenuItem>
-        <MenuItem onClick={onClick} component={Link} to={"/profile"}>
+        <MenuItem onClick={onClick} component={Link} to={getProfileLink}>
           Profile
         </MenuItem>
-        <MenuItem onClick={onClick} component={Link} to={"/chats"}>
+        <MenuItem onClick={onClick} component={Link} to={getChatsLink}>
           Chats
         </MenuItem>
       </Menu>

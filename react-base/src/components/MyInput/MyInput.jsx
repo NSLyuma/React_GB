@@ -8,7 +8,5 @@ export const MyInput = (props) => {
     inputRef.current.focus();
   });
 
-  return (
-    <Input sx={{ padding: 0 }} inputRef={inputRef} {...props} type="text" />
-  );
+  return <Input sx={{ padding: 0 }} inputRef={inputRef} {...props} />;
 };

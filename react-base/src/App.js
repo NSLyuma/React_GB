@@ -6,9 +6,11 @@ import {
   getChatsLink,
   getGistsLink,
   getHomeLink,
+  getLoginLink,
   getMessagesLink,
   getNotFoundLink,
   getProfileLink,
+  getRegistrationLink,
 } from "./navigation";
 import { Chats } from "./routes/Chats";
 import { Home } from "./routes/Home";
@@ -18,6 +20,8 @@ import { Profile } from "./routes/Profile";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Gists } from "./routes/Gists";
+import { Login } from "./routes/Login";
+import { Registration } from "./routes/Registration";
 
 const App = () => {
   return (
@@ -27,6 +31,8 @@ const App = () => {
           <Header />
           <Switch>
             <Route exact path={getHomeLink()} component={Home} />
+            <Route path={getLoginLink()} component={Login} />
+            <Route path={getRegistrationLink()} component={Registration} />
             <Route path={getGistsLink()} component={Gists} />
             <Route path={getChatsLink()}>
               <Chats>
