@@ -1,8 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
-import { Menu } from "@mui/material";
-import { MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
+import { HeaderPresenter } from "./HeaderPresenter";
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -17,29 +14,12 @@ export const Header = () => {
   };
 
   return (
-    <div>
-      <Button id="basic-button" onClick={handleClick}>
-        Menu
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleClose} component={Link} to={"/"}>
-          Home
-        </MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to={"/profile"}>
-          Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to={"/chats"}>
-          Chats
-        </MenuItem>
-      </Menu>
-    </div>
+    <HeaderPresenter
+      onBtnClick={handleClick}
+      anchorEl={anchorEl}
+      open={open}
+      onClose={handleClose}
+      onClick={handleClose}
+    />
   );
 };
